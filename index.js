@@ -20,3 +20,11 @@ app.get("/outfits",(req,res)=>{
     })
 
 })
+
+//comments
+app.post('/comments',(req,res)=>{
+    //uuid generates unique id for each comment
+    const id=uuid();
+    console.log(id)
+    res.sendStatus(201)
+})
