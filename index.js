@@ -3,6 +3,7 @@ const express=require('express')
 const cors=require('cors')
 const _=require('lodash')
 const {v4:uuid}=require('uuid')
+const { writeFile } = require('fs')
 const app=express()
 const port=process.env.PORT||3000
 app.listen(port,()=>console.log('API server is running'))
@@ -23,7 +24,7 @@ app.get("/outfits",(req,res)=>{
 
 //comments
 app.use(express.json())
-app.post('/comments',(req,res)=>{
+app.post('/comments',async(req,res)=>{
     //uuid generates unique id for each comment
     const id=uuid();
     console.log(id)
@@ -31,5 +32,15 @@ app.post('/comments',(req,res)=>{
     // const name=req.body.name;
     // console.log(content ,name)
     //validate
-    res.sendStatus(201)
+    //make sure to use a return statement if you want to exit from a express point early
+    if(!content){
+        return res.sendStatus(400)
+    }
+    //save the comments in a text file
+    await fs.mkdir('data/comments', {recursive: true})
+    //saving in the file the comments with uuid
+    await fs.writeFile(`data/comments${id}`,content)
+    res.status(201).json({
+        id:id
+    })
 })
