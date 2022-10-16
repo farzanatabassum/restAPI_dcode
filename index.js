@@ -22,9 +22,14 @@ app.get("/outfits",(req,res)=>{
 })
 
 //comments
+app.use(express.json())
 app.post('/comments',(req,res)=>{
     //uuid generates unique id for each comment
     const id=uuid();
     console.log(id)
+    const content=req.body.content;
+    // const name=req.body.name;
+    // console.log(content ,name)
+    //validate
     res.sendStatus(201)
 })
