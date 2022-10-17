@@ -3,24 +3,14 @@ const express=require('express')
 const cors=require('cors')
 const _=require('lodash')
 const {v4:uuid}=require('uuid')
-const { writeFile } = require('fs')
 const app=express()
 const port=process.env.PORT||3000
+const outfitRoute=require('./routes/Outfit')
+const outfitsRoute=require('./routes/Outfits')
+app.use("/outfit",outfitRoute);
+app.use("/outfits",outfitsRoute);
 app.listen(port,()=>console.log('API server is running'))
-app.get('/outfit',(req,res)=>{
-    res.send("This is working")
-})
-app.get("/outfits",(req,res)=>{
-    const tops=['Orange','Blue','White','Yellow'];
-    const jeans=['Black','Navy','Red']
-    const shirts=['Green','Gray','Scarlet']
-    res.json({
-        top:_.sample(tops),
-        jean:_.sample(jeans),
-        shirt:_.sample(shirts)
-    })
 
-})
 
 //comments
 app.use(express.json())
